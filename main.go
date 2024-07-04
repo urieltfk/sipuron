@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"sync"
 
@@ -9,7 +8,7 @@ import (
 )
 
 var (
-	bookMap = make(map[uint]string)
+	bookMap = make(map[string]string)
 	mu      sync.Mutex
 	cond    = sync.NewCond(&mu)
 )
@@ -64,13 +63,8 @@ func postBook(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"status": "updated"})
 }
 
-func parseID(idParam string) (uint, error) {
-	var id uint
-	_, err := fmt.Sscanf(idParam, "%d", &id)
-	if err != nil {
-		return 0, err
-	}
-	return id, nil
+func parseID(idParam string) (string, error) {
+	return idParam, nil
 }
 
 /*
